@@ -1,6 +1,5 @@
 # Import python packages
 import streamlit
-from snowflake.snowpark.context import get_active_session
 
 # Write directly to the app
 streamlit.title("My Parents' New Healthy Diner")
