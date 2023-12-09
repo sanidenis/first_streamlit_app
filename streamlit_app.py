@@ -22,15 +22,24 @@ fruits_selected = streamlit.multiselect("Pick some fruits: ", list(my_fruit_list
 fruits_to_show = my_fruit_list.loc[fruits_selected]
 streamlit.dataframe(fruits_to_show)
 
-fruit_choice = streamlit.text_input('What fruit would you like information about?','apple')
-streamlit.write('The user entered ', fruit_choice)
+streamlit.header('Fruityvice Fruit Advice!')
 
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+try:
+  fruit_choice = streamlit.text_input('What fruit would you like information about?','apple')
+  if not fruit_choice:
+    streamlit.error("Please select a fruit to get information.")
+  else:
+    streamlit.write('The user entered ', fruit_choice)
+    
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+    
+    #run panda's normalize function on the json response
+    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+    #make a new table withthe normalized response
+    streamlit.dataframe(fruityvice_normalized)
 
-#run panda's normalize function on the json response
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-#make a new table withthe normalized response
-streamlit.dataframe(fruityvice_normalized)
+except URLError as e:
+  streamlit.error()
 
 # don't run anything past here while we troubleshoot
 streamlit.stop()
