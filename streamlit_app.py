@@ -1,4 +1,4 @@
-# Import python packages
+or# Import python packages
 import streamlit
 
 # Write directly to the app
@@ -30,4 +30,4 @@ fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 streamlit.dataframe(fruityvice_normalized)
 
 import snowflake as sf
-from snowflake import connector
+from snowflake-connector-python import connector
